@@ -16,6 +16,7 @@ class TestIndexView(View):
     # logger.info('Running View')
     def get(self, request):
         logger.debug('os')
+
         print('aaa')
         return HttpResponse(200)
 
