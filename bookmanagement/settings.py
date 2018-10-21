@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'testclass',
 ]
 
 MIDDLEWARE = [
@@ -170,7 +171,7 @@ LOGGING = {
             'propagate': False,
         },
         #追加
-        'myapp': {
+        'testclass': {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
