@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 # Logger
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse',
@@ -143,8 +143,16 @@ LOGGING = {
         },
     },
     'handlers': {
+        'file': {  # どこに出すかの設定に名前をつける `file`という名前をつけている
+            'level': 'DEBUG',  # DEBUG以上のログを取り扱うという意味
+            'class': 'logging.handlers.RotatingFileHandler',  # ログを出力するためのクラスを指定(サイズローテーション
+            'filename': os.path.join(BASE_DIR, 'django.log'),  # どこに出すか
+            'formatter': 'verbose',  # どの出力フォーマットで出すかを名前で指定
+            'maxBytes': 1024 * 1024 * 10, # 10GBでローテーション
+            'backupCount': 10, # バックアップファイルは10ファイルまで
+        },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
@@ -163,18 +171,17 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console', 'mail_admins'],
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
         'django.server': {
             'handlers': ['django.server'],
             'level': 'INFO',
             'propagate': False,
         },
-        #追加
         'testclass': {
             'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
+            'level': 'DEBUG',
+            'propagate': True,
         },
     }
 }
